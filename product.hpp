@@ -36,7 +36,7 @@ private:
             return (itr1 != other.itr1);
         }
 
-        std::pair<decltype(itr1),decltype(*itr2)> operator() const
+        std::pair<decltype(*itr1),decltype(*itr2)> operator*() const
         {
             return std::pair< decltype(*itr1),
                               decltype(*itr2)> (*itr1,*itr2);
@@ -66,4 +66,4 @@ product<T, E> myproduct(T first, E second)
     return product<T, E>(first, second);
 }
 
-}
+} 
