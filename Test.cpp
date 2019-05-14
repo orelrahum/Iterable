@@ -14,188 +14,191 @@ int main() {
 	badkan::TestCase testcase;
 	int grade = 0;
 	int signal = setjmp(badkan::longjmp_buffer);
-	int Temp = 0;
+	int temp = 0;
+	char tempc = 'a';
+
 	if (signal == 0) {
 	/////////////////////////My_Test///////////////////////////
-	/////////////////////////range_Test////////////////////////
+	//range:
 		testcase.setname("range test");
-		 Temp = 0;
-		for (int i: range(0,12)) {
-			testcase.CHECK_EQUAL(i, Temp);
-			Temp++;
+		 temp = 1;
+		for (int i: range(1,10)) {
+			testcase.CHECK_EQUAL(i, temp);
+			temp++;
+		}
+		temp = 203;
+		for (int i: range(203,210)) {
+			testcase.CHECK_EQUAL(i, temp);
+			temp++;
+		}
+		temp = -3;
+		for (int i: range(-3,0)) {
+			testcase.CHECK_EQUAL(i, temp);
+			temp++;
+		}
+		temp = -20;
+		for (int i: range(-20,4)) {
+			testcase.CHECK_EQUAL(i, temp);
+			temp++;
+		}
+		temp = 0;
+		for (int i: range(0,0)) {
+			testcase.CHECK_EQUAL(i, temp);
+			temp++;
+		}
+		for (int i: range('a','z')) {
+			testcase.CHECK_EQUAL(i, tempc);
+			tempc++;
+		}
+		tempc = 'c';
+		for (int i: range('c','e')) {
+			testcase.CHECK_EQUAL(i, tempc);
+			tempc++;
 		}
 
-		Temp = 4;
-		for (int i: range(4,7)) {
-			testcase.CHECK_EQUAL(i, Temp);
-			Temp++;
+		tempc = 'a';
+		for (int i: range('a','a')) {
+			testcase.CHECK_EQUAL(i, tempc);
+			tempc++;
 		}
 
-        //////////////////// range_Test - Check "-" ////////////////////////
-		Temp = -7;
-		for (int i: range(-7,0)) {
-			testcase.CHECK_EQUAL(i, Temp);
-			Temp++;
-		}
-
-		Temp = 10;
-		for (int i: range(10,12)) {
-			testcase.CHECK_EQUAL(i, Temp);
-			Temp++;
-		}
-
-		Temp = 2;
-		for (int i: range(2,2)) {
-			testcase.CHECK_EQUAL(i, Temp);
-			Temp++;
-		}
-    //////////////////// range_Test - Check Char ////////////////////////
-		char Temp_C = 'a';
-		for (int i: range('a','j')) {
-			testcase.CHECK_EQUAL(i, Temp_C);
-			Temp_C++;
-		}
-
-		Temp_C = 'd';
-		for (int i: range('d','d')) {
-			testcase.CHECK_EQUAL(i, Temp_C);
-			Temp_C++;
-		}
-
-		Temp_C = 'u';
-		for (int i: range('u','l')) {
-			testcase.CHECK_EQUAL(i, Temp_C);
-			Temp_C++;
-		}
-
-    ///////////////////////////Chain_Test////////////////////////////////////
+    //Chain_Test:
 		testcase.setname("Chain test");
-		Temp = 0;
-		int Chck_1[] = {1,2,3,4,5,6,7,8,9,10};
+		temp=0;
+		int Check1[] = {1,2,3,4,5,6,7,8,9,10};
 		for(int i: chain(range(1,6), range(5,11))) {
-			testcase.CHECK_EQUAL(i, Chck_1[Temp]);
-			Temp++;				
+			testcase.CHECK_EQUAL(i, Check1[temp]);
+			temp++;				
 		}
 
-		Temp = 0;
-		int Chck_2[] = {0,1,2,3,4,5,5,6,7};
-		for(int i: chain(range(0,6), range(5,8))) {
-			testcase.CHECK_EQUAL(i, Chck_2[Temp]);
-			Temp++;				
+		temp = 0;
+		int Check2[] = {0,1,2,4,5,6,7};
+		for(int i: chain(range(0,3), range(4,7))) {
+			testcase.CHECK_EQUAL(i, Check2[temp]);
+			temp++;				
 		}
 
-		Temp = 0;
-		char Chck_3[] = {'a','b','c','d','e','f'};
-		for(int i: chain(range('a','d'), range('d','g'))) {
-			testcase.CHECK_EQUAL(i, Chck_3[Temp]);
-			Temp++;				
+		temp = 0;
+		char Check3[] = {'a','b','c','d'};
+		for(int i: chain(range('a','b'), range('b','e'))) {
+			testcase.CHECK_EQUAL(i, Check3[temp]);
+			temp++;				
 		}
 		
-		Temp = 0;
-		char Chck_4[] = {'a','b','c','A','B','C','D'};
-		for(int i: chain(range('a','d'), range('A','E'))) {
-			testcase.CHECK_EQUAL(i, Chck_4[Temp]);
-			Temp++;				
+		temp = 0;
+		char Check4[] = {'h','i','j','L','M','N','O'};
+		for(int i: chain(range('h','k'), range('L','P'))) {
+			testcase.CHECK_EQUAL(i, Check4[temp]);
+			temp++;				
 		}
-			Temp = 0;
-		char Chck_5[] = {'A','B','C','D','E','F','G'};
+			temp = 0;
+		char Check5[] = {'A','B','C','F','G','H'};
 		
-		for(int i: chain(range('A','D'), range('D','H')))
+		for(int i: chain(range('A','D'), range('F','I')))
 		{
-			testcase.CHECK_EQUAL(i, Chck_5[Temp]);
-			Temp++;				
+			testcase.CHECK_EQUAL(i, Check5[temp]);
+			temp++;				
 		}
 
 	
-    //////////////////////////////////Test_Product//////////////////////////
+    //Product:
         testcase.setname(" TEST PRODUCT");
-	    int Temp=0;
-		string Chck_6[]={"0,e","0,d","1,e","1,d","2,e","2,d"};
-        for (auto pair: product(range(0,3), string("ed")))
+	    int temp=0;
+		string Check6[]={"0,h","0,e","0,l","0,l","0,o","1,h","1,e","1,l","1,l","1,o","2,h","2,e","2,l","2,l","2,o"};
+        for (auto pair: product(range(0,3), string("hello")))
         {
-		testcase.CHECK_OUTPUT(pair,Chck_6[Temp]);
-		Temp++;
+		testcase.CHECK_OUTPUT(pair,Check6[temp]);
+		temp++;
         }
-	    Temp=0;
-		string Chck_7[]={"0,3","0,4","1,3","1,4","2,3","2,4"};
+		
+	    temp=0;
+		string Check7[]={"0,3","0,4","1,3","1,4","2,3","2,4"};
         for (auto pair: product(range(0,3), range(3,5)))
         {
-		testcase.CHECK_OUTPUT(pair,Chck_7[Temp]);
-		Temp++;
+		testcase.CHECK_OUTPUT(pair,Check7[temp]);
+		temp++;
         }
-	    Temp=0;
-		string Chck_8[]={"1,a","1,b","2,a","2,b","3,a","3,b","4,a","4,b"};
-        for (auto pair: product(range(1,5), range('a','c')))
+		
+	    temp=0;
+		string Check8[]={"h,1","h,2","h,3","h,4","e,1","e,2","e,3","e,4","l,1","l,2","l,3","l,4","l,1","l,2","l,3","l,4","o,1","o,2","o,3","o,4"};
+        for (auto pair: product(string("hello"), range(1,5)))
         {
-		testcase.CHECK_OUTPUT(pair,Chck_8[Temp]);
-		Temp++;
+		testcase.CHECK_OUTPUT(pair,Check8[temp]);
+		temp++;
         }
-	    Temp=0;
-		string Chck_9[]={"6,c","6,d","7,c","7,d","8,c","8,d"};
-        for (auto pair: product(range(6,9), range('c','e')))
+		temp=0;
+		string Check9[]={"a,1","a,2","a,3","a,4","b,1","b,2","b,3","b,4","c,1","c,2","c,3","c,4","d,1","d,2","d,3","d,4","e,1","e,2","e,3","e,4"};
+        for (auto pair: product(range('a','f'), range(1,5)))
         {
-		testcase.CHECK_OUTPUT(pair,Chck_9[Temp]);
-		Temp++;
+		testcase.CHECK_OUTPUT(pair,Check9[temp]);
+		temp++;
+        }
+	    temp=0;
+		string Check10[]={"a,d","a,e","a,f","a,g","a,h","b,d","b,e","b,f","b,g","b,h","c,d","c,e","c,f","c,g","c,h"};
+        for (auto pair: product(range('a','d'), range('d','i')))
+        {
+		testcase.CHECK_OUTPUT(pair,Check10[temp]);
+		temp++;
         }
 
-     ///////////////////////////// Test Zip	/////////////////////////////////
+     // Zip:
 		testcase.setname("Test Zip ");
-        Temp=0;
-        string Chck_10[]={"1,d","2,e","3,r","4,i"};
-        for (auto pair: zip(range(1,5), string("deri"))) {
-		testcase.CHECK_OUTPUT(pair,Chck_10[Temp]);
-		Temp++;
+        temp=0;
+        string Check11[]={"1,a","2,b","3,c","4,d"};
+        for (auto pair: zip(range(1,5), range('a','e'))) {
+		testcase.CHECK_OUTPUT(pair,Check11[temp]);
+		temp++;
         }
 
-        Temp=0;
-		string Chck_11[]={"1,c","2,p","3,p"};
-        for (auto pair: zip(range(1,4), string("cpp"))) {
-		testcase.CHECK_OUTPUT(pair,Chck_11[Temp]);
-		Temp++;
+        temp=0;
+		string Check12[]={"n,o","a,r","o,e","m,l","i,r"};
+        for (auto pair: zip(string("naomi"), string("orelr"))) {
+		testcase.CHECK_OUTPUT(pair,Check12[temp]);
+		temp++;
         }
 
-        Temp=0;
-		string Chck_12[]={"0,0","1,1","2,2","3,3","4,4"};
-        for (auto pair: zip(range(0,5), range(0,5))) {
-		testcase.CHECK_OUTPUT(pair,Chck_12[Temp]);
-		Temp++;
+        temp=0;
+		string Check13[]={"0,7","1,8","2,9","3,10","4,11"};
+        for (auto pair: zip(range(0,5), range(7,12))) {
+		testcase.CHECK_OUTPUT(pair,Check13[temp]);
+		temp++;
         }
 
-        Temp=0;
-		string Chck_13[]={"0,a","1,b","2,c","3,d"};
-        for (auto pair: zip(range(0,4), range('a','e'))) {
-		testcase.CHECK_OUTPUT(pair,Chck_13[Temp]);
-		Temp++;
+        temp=0;
+		string Check14[]={"-1,a","0,b","1,c","2,d"};
+        for (auto pair: zip(range(-1,3), range('a','e'))) {
+		testcase.CHECK_OUTPUT(pair,Check14[temp]);
+		temp++;
         }
 
-        Temp=0;
-		string Chck_14[]={"A,a","B,b","C,c","D,d"};
+        temp=0;
+		string Check15[]={"A,a","B,b","C,c","D,d"};
         for (auto pair: zip(range('A','E'), range('a','e'))) {
-		testcase.CHECK_OUTPUT(pair,Chck_14[Temp]);
-		Temp++;
+		testcase.CHECK_OUTPUT(pair,Check15[temp]);
+		temp++;
 }
 
-	////////////////////////////////// Test_PowerSet /////////////////////////////////
+	// PowerSet:
 	    testcase.setname(" Test PowerSet");
-	    Temp=0;
-		string Chck_15[]={"{}","{5}","{6}","{5,6}","{7}","{5,7}","{6,7}","{5,6,7}"};
+	    temp=0;
+		string Check16[]={"{}","{5}","{6}","{5,6}","{7}","{5,7}","{6,7}","{5,6,7}"};
         for (auto pair: powerset(range(5,8))){
-		testcase.CHECK_OUTPUT(pair,Chck_15[Temp]);
-		Temp++;
+		testcase.CHECK_OUTPUT(pair,Check16[temp]);
+		temp++;
 }
 
-	    Temp=0;
-		string Chck_16[]={"{}","{a}","{b}","{a,b}","{1}","{a,1}","{b,1}","{a,b,1}","{2}","{a,2}","{b,2}","{a,b,2}","{1,2}","{a,1,2}","{b,1,2}","{a,b,1,2}"};
+	    temp=0;
+		string Check17[]={"{}","{a}","{b}","{a,b}","{1}","{a,1}","{b,1}","{a,b,1}","{2}","{a,2}","{b,2}","{a,b,2}","{1,2}","{a,1,2}","{b,1,2}","{a,b,1,2}"};
         for (auto subset: powerset(chain(range('a','c'),range('1','3')))) {
-		testcase.CHECK_OUTPUT(subset,Chck_16[Temp]);
-		Temp++;
+		testcase.CHECK_OUTPUT(subset,Check17[temp]);
+		temp++;
 }
 
-	Temp=0;
-	string Chck_17[]={"{}","{c}","{p}","{c,p}","{p}","{c,p}","{p,p}","{c,p,p}"};
+	temp=0;
+	string Check18[]={"{}","{c}","{p}","{c,p}","{p}","{c,p}","{p,p}","{c,p,p}"};
     for (auto subset: powerset(string("cpp"))) {
-	  testcase.CHECK_OUTPUT(subset,Chck_17[Temp]);
- 	   Temp++;
+	  testcase.CHECK_OUTPUT(subset,Check18[temp]);
+ 	   temp++;
 }
 
 ////////////////////////////////// end_MyTest ////////////////////////////////////////
