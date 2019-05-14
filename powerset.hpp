@@ -1,4 +1,3 @@
-
 #include <set> 
 #include <vector>
 #include <cmath>
@@ -110,4 +109,4 @@ _powerset<T> powerset(T from)
     return _powerset<T>(from);
 }
 
-}
+} 
