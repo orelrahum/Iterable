@@ -34,7 +34,7 @@ private:
             
         }
 
-        decltype(itr1) operator*() const
+        decltype(*itr1) operator*() const
         {
             if(flag)
                 return *itr1;
@@ -70,4 +70,4 @@ chain<A, B> mychain(A chain1, B chain2)
     return mychain<A, B>(chain1, chain2);
 }
 
-}
+} 
