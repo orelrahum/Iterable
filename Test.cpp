@@ -50,7 +50,7 @@ int main() {
 			testcase.CHECK_EQUAL(i, tempc);
 			tempc++;
 		}
-		Temp_C = 'c';
+		tempc = 'c';
 		for (int i: range('c','e')) {
 			testcase.CHECK_EQUAL(i, tempc);
 			tempc++;
@@ -142,7 +142,7 @@ int main() {
 		testcase.setname("Test Zip ");
         temp=0;
         string Check11[]={"1,a","2,b","3,c","4,d"};
-        for (auto pair: zip(range(1,5), range(a,e)) {
+        for (auto pair: zip(range(1,5), range('a','e'))) {
 		testcase.CHECK_OUTPUT(pair,Check11[temp]);
 		temp++;
         }
