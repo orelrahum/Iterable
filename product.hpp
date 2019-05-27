@@ -1,69 +1,74 @@
-#include <utility> 
 
-namespace itertools
-{
+#include "iostream"
 
 
-template <class T, class E>
+namespace itertools {
+bool Help=false;
+    template <typename Template1, typename Template2>
 
-class product
-{
-private:
-    T iterat1;    
-    E iterat2;    
+    class product {
 
-    template <typename U, typename V>
-    class iterator
-    {
+    private:
+        Template1 it1;
+        Template2 it2;
+
     public:
-        U itr1; 
-        V itr2; 
-        V itr3; 
+        product(Template1 start, Template2 end) :  it1(start), it2(end) {
+          Help=false;
+          if(!(end.begin()!=end.end())){
+            Help=true;
+          }
+        }
 
-        iterator(U iteratable_A, V iteratable_B) : 
-            itr1(iteratable_A), 
-            itr2(iteratable_B),
-            itr3(iteratable_B) {}
+    auto begin() const{
+        return  iterator<decltype(it1.begin()),decltype(it2.begin())>(it1.begin(), it2.begin()); }  // iteratable object
 
-        bool operator!=(product::iterator<U,V> const &other) 
-        {            
-            if ((itr1 != other.itr1) && !(itr2 != other.itr2))
-            {
-                itr2 = itr3;
-                ++itr1;
+    auto end() const{
+        return iterator<decltype(it1.end()),decltype(it2.end())>(it1.end(), it2.end()); }  // iteratable object
+
+    template <typename C1, typename C2>
+        class iterator {
+
+        private:
+            C1 it1;
+            C2 it2;
+            C2 pos;
+            bool save;
+
+        public:
+            iterator(C1 itA , C2 itB): it1(itA) , it2(itB) , pos(it2),save(false) {}
+
+           iterator<C1,C2>& operator++() {
+            if(!save)
+               ++it2;
+               return *this;
+
             }
 
-            return (itr1 != other.itr1);
-        }
+            auto operator*() const {
 
-        std::pair<decltype(*itr1),decltype(*itr2)> operator*() const
-        {
-            return std::pair< decltype(*itr1),
-                              decltype(*itr2)> (*itr1,*itr2);
-        }
+             return  std::pair<decltype(*it1),decltype(*it2)> (*it1 , *it2);
+            }
 
-        product::iterator<U,V> &operator++()
-        {
-            ++itr2;
-            return *this;
-        }
+            bool operator!=(iterator const  it){
+                if((it1 != it.it1) && !(it2 != it.it2)){
+                  save=true;
+                }
+                if(save){
+
+                save=false;
+                    it2 = pos;
+                    ++it1;
+                }
+                return (it1 != it.it1&& !Help);
+
+            }
+
+
+
+        };
+
+
     };
 
-public:
-    product(T from, E to) : iterat1(from), iterat2(to) {} // constructor
-
-    auto begin() const{ 
-        return  product::iterator<decltype(iterat1.begin()),decltype(iterat2.begin())>(iterat1.begin(), iterat2.begin()); }  
-
-    auto end() const {
-        return product::iterator<decltype(iterat1.end()),decltype(iterat2.end())>(iterat1.end(), iterat2.end()); }  
-};  // class
-
-template <typename T, typename E>
-
-product<T, E> myproduct(T first, E second)
-{
-    return product<T, E>(first, second);
 }
-
-} 
